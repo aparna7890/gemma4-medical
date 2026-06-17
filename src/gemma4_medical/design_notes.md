@@ -106,3 +106,22 @@ ________________________________________________________________________________
 - Quote for report: "LR=5e-5 shows clear underfitting — loss curve 
   nearly flat after step 150, suggesting the learning rate is 
   insufficient for meaningful weight updates within 200 steps"
+
+### Run 2 — LR=5e-4 (m3-lr5e4-r16-drop0)
+- Final train loss: 0.283 | Final val loss: 2.742
+- Verdict: BEST VAL LOSS SO FAR ✅
+- Contrary to hypothesis — no instability observed
+- grad_norm stayed low (0.10) throughout — stable training
+- Learns faster than M2 baseline in early steps
+- Best LR candidate so far
+
+  ### Run 3 — r=8 (m3-lr2e4-r8-drop0)
+- Final train loss: 0.478 | Final val loss: 2.886
+- Verdict: WORSE THAN r=16 ❌
+- Val loss unstable at step 150 (went up then down)
+- Smaller adapter lacks capacity for medical reasoning
+
+### Run 4 — r=32 (m3-lr2e4-r32-drop0)
+- Hypothesis: more capacity, might overfit on 5k examples
+- Watch for: train-val gap growing after step 150
+
