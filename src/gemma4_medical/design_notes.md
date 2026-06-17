@@ -115,7 +115,7 @@ ________________________________________________________________________________
 - Learns faster than M2 baseline in early steps
 - Best LR candidate so far
 
-  ### Run 3 — r=8 (m3-lr2e4-r8-drop0)
+### Run 3 — r=8 (m3-lr2e4-r8-drop0)
 - Final train loss: 0.478 | Final val loss: 2.886
 - Verdict: WORSE THAN r=16 ❌
 - Val loss unstable at step 150 (went up then down)
@@ -124,4 +124,52 @@ ________________________________________________________________________________
 ### Run 4 — r=32 (m3-lr2e4-r32-drop0)
 - Hypothesis: more capacity, might overfit on 5k examples
 - Watch for: train-val gap growing after step 150
+
+### Run 5 - 
+-
+-
+
+## M3 Hyperparameter Sweep — Final Results
+
+### All Runs Summary
+| Run  |  LR  |Rank|Dropout|Val Loss@200|   Verdict    |
+|------|------|----|-------|------------|--------------|
+| M2   | 2e-4 | 16 |  0.0  |   2.485*   | Best overall |
+| Run1 | 5e-5 | 16 |  0.0  |   2.918    | Underfit     |
+| Run2 | 5e-4 | 16 |  0.0  |   2.742    | Best LR      |
+| Run3 | 2e-4 | 8  |  0.0  |   2.886    | Low capacity |
+| Run4 | 2e-4 | 32 |  0.0  |   2.765    | Best rank    |
+| Run5 | 2e-4 | 16 |  0.05 |   2.818    | Dropout hurts|
+*M2 ran full 625 steps, others 200 steps
+
+### Key Findings
+1. LR=5e-5 — clear underfitting, loss barely moves
+2. LR=5e-4 — best among 200-step LR runs, stable training
+3. r=8 — worse than r=16, insufficient capacity
+4. r=32 — marginally better than r=16, more capacity helps
+5. dropout=0.05 — slightly worse val loss, not beneficial here
+6. Best config for M4: LR=2e-4, r=16 (M2 config, proven stable)
+
+### Environment Notes
+- All runs: max_seq_length=512, load_in_4bit=True, 5000 train examples
+- Colab T4 15GB, ~25 min per 200-step run
+- Adapters pushed to HuggingFace Hub after each run
+
+
+## M4 — QLoRA vs LoRA Comparison
+
+|    Config     | Peak VRAM |Val Loss@200|   Time   |
+|---------------|-----------|------------|----------|
+| QLoRA (4-bit) |  9.5 GB   |    2.765   | 25 min   |
+| LoRA (full)   |  11.25 GB |    2.787   | 22.2 min |
+
+### Findings
+- QLoRA used 1.75GB less VRAM than full precision LoRA
+- QLoRA achieved BETTER val loss (2.765 vs 2.787)
+- Full precision was slightly faster (22 vs 25 min)
+- Conclusion: QLoRA is the better choice for this task on T4
+- 4-bit quantization cost = zero quality loss on narrow medical domain
+- Report quote: "QLoDA matched and slightly exceeded full-precision 
+  LoRA quality while using 15% less VRAM, confirming that 4-bit 
+  quantization is appropriate for domain adaptation on narrow tasks"
 
