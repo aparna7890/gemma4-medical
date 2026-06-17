@@ -83,4 +83,26 @@ ________________________________________________________________________________
 - [x] Run completes without OOM
 - [x] Training loss decreases monotonically after warmup
 - [x] Adapter saves cleanly
-- [ ] Inference check vs M1 baseline (pending Cell 5)
+- [x] Inference check vs M1 baseline
+
+
+## M2 vs M1 Inference Comparison
+
+### Triangle of Doom question
+- M1: Confused with Hesselbach's, no reasoning shown
+- M2: Shows CoT reasoning structure ✅, still wrong anatomy ⚠️
+- Improvement: Reasoning FORMAT learned, factual accuracy needs more data/longer sequences
+- Root cause of remaining errors: max_seq_length=512 truncates long medical answers during training
+- Fix for M3: Consider whether longer sequences improve factual accuracy
+
+
+## M3 Hyperparameter Sweep Results
+
+### Run 1 — LR=5e-5 (m3-lr5e5-r16-drop0)
+- Final train loss: 0.445 | Final val loss: 2.918
+- Verdict: UNDERFITTING ❌
+- Loss curve nearly flat after step 150
+- LR too low — insufficient weight updates in 200 steps
+- Quote for report: "LR=5e-5 shows clear underfitting — loss curve 
+  nearly flat after step 150, suggesting the learning rate is 
+  insufficient for meaningful weight updates within 200 steps"
