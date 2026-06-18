@@ -192,6 +192,20 @@ Document 4+ criteria for stopping runs by hand:
 ### Inference Monitoring
 Print one inference example every 50 steps — reading output catches failure before loss curves do.
 
+### M5 Results
+**Run:** LR=5e-3 (intentionally bad)
+| Step | Train Loss| Val Loss |
+|------|-----------|----------|
+| 50   | 0.831     |  16.083  |
+| 100  | NaN       |  20.747  |
+| 150  | NaN       |  22.737  |
+
+**Verdict:** ✅ Catastrophic failure confirmed
+- LR=5e-3 causes gradient explosion by step 100
+- Loss diverges beyond recovery
+- EarlyStoppingCallback would fire after 3 evals of rising val loss
+- Demonstrates: always monitor loss curves, bad LR is fatal
+
 ______________________________________________________________________________________________________________________________________
 
 ## Summary & Lessons Learned
