@@ -22,3 +22,14 @@ model = AutoPeftModelForCausalLM.from_pretrained(
     "your-username/gemma4-medical-m3-lr2e4-r32-drop0"
 )
 ```
+
+✅ M0 Setup
+✅ M1 Baseline
+✅ M2 LoRA training
+✅ M3 Hyperparameter sweep (5 runs)
+✅ M4 QLoRA comparison
+✅ M5 Early stopping
+✅ Design notes
+✅ Technical report
+✅ All adapters on HF Hub
+⏳ Demo video 
