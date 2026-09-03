@@ -8,9 +8,9 @@ Fine-tuned Gemma 4 E2B (2.3B) on medical SFT dataset using QLoRA.
 - **VRAM:** 9.5GB (T4 GPU)
 
 ## Adapters
-- [Main repo](https://huggingface.co/your-username/gemma4-medical-lora)
-- [M4 full precision](https://huggingface.co/your-username/gemma4-medical-m4-lora-full)
-- [All M3 runs](https://huggingface.co/your-username?search=gemma4-medical)
+- [Main repo](https://huggingface.co/kaching999/gemma4-medical-lora)
+- [M4 full precision](https://huggingface.co/kaching999/gemma4-medical-m4-lora-full)
+- [All M3 runs](https://huggingface.co/kaching999?search=gemma4-medical)
 
 ## Report
 See `report.md` for full technical analysis.
