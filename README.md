@@ -19,7 +19,7 @@ See `report.md` for full technical analysis.
 ```python
 from peft import AutoPeftModelForCausalLM
 model = AutoPeftModelForCausalLM.from_pretrained(
-    "your-username/gemma4-medical-m3-lr2e4-r32-drop0"
+    "kaching999/gemma4-medical-m3-lr2e4-r32-drop0"
 )
 ```
 
@@ -32,4 +32,3 @@ model = AutoPeftModelForCausalLM.from_pretrained(
 ✅ Design notes
 ✅ Technical report
 ✅ All adapters on HF Hub
-⏳ Demo video 
